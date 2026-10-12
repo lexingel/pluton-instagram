@@ -1,35 +1,40 @@
-"""Claude sabah görevi: o günün PNG'lerini JPEG'e çevirir, manifest ile birlikte GitHub'a yükler.
+"""Claude sabah görevi: o günün PNG'lerini JPEG'e çevirir, manifest ile birlikte GitHub'a (git push) yükler.
+
 Kullanım: python3 push_day.py <YYYY-MM-DD> <posts.json>
-posts.json: [{"png": "/mnt/.../x.png", "file": "1-sabah.jpg", "caption": "...", "time": "08:00"}, ...]
+posts.json: [{"png": "/yol/x.png", "file": "1-sabah.jpg", "caption": "...", "time": "08:00"}, ...]
 Ortam: GH_PAT (yalnızca bu depoya yazma izinli anahtar), GH_REPO (kullanıcı/depo)
+Not: Claude ortamında GitHub REST API kapalı; git üzerinden yüklenir.
 """
-import base64, io, json, os, sys, urllib.request
+import json, os, subprocess, sys, tempfile
 from PIL import Image
 
 day, spec = sys.argv[1], json.load(open(sys.argv[2], encoding="utf-8"))
 repo, tok = os.environ["GH_REPO"], os.environ["GH_PAT"]
+url = f"https://x-access-token:{tok}@github.com/{repo}.git"
+work = tempfile.mkdtemp()
 
-def put(path, data: bytes, msg):
-    url = f"https://api.github.com/repos/{repo}/contents/{path}"
-    h = {"Authorization": f"Bearer {tok}", "Accept": "application/vnd.github+json"}
-    sha = None
-    try:
-        with urllib.request.urlopen(urllib.request.Request(url, headers=h)) as r:
-            sha = json.load(r)["sha"]
-    except urllib.error.HTTPError as e:
-        if e.code != 404: raise
-    body = {"message": msg, "content": base64.b64encode(data).decode()}
-    if sha: body["sha"] = sha
-    req = urllib.request.Request(url, data=json.dumps(body).encode(), headers=h, method="PUT")
-    with urllib.request.urlopen(req) as r:
-        print("yüklendi:", path, r.status)
+def git(*a):
+    r = subprocess.run(["git", "-C", work, *a], capture_output=True, text=True)
+    if r.returncode:
+        raise SystemExit((r.stdout + r.stderr).replace(tok, "***"))
+    return r.stdout
 
+subprocess.run(["git", "clone", "-q", "--depth", "1", url, work], check=True, capture_output=True)
+git("config", "user.name", "Claude (Plüton)"); git("config", "user.email", "claude@users.noreply.github.com")
+folder = os.path.join(work, "posts", day); os.makedirs(folder, exist_ok=True)
 manifest = []
 for p in spec:
-    buf = io.BytesIO()
-    Image.open(p["png"]).convert("RGB").save(buf, "JPEG", quality=92, optimize=True)
-    put(f"posts/{day}/{p['file']}", buf.getvalue(), f"{day} {p['file']}")
+    Image.open(p["png"]).convert("RGB").save(os.path.join(folder, p["file"]), "JPEG", quality=92, optimize=True)
     manifest.append({"file": p["file"], "caption": p["caption"],
                      "publish_at": f"{day}T{p['time']}:00+03:00", "status": "pending"})
-# manifest en son yüklenir ki yayıncı eksik görsel görmesin
-put(f"posts/{day}/manifest.json", json.dumps(manifest, ensure_ascii=False, indent=2).encode(), f"{day} manifest")
+json.dump(manifest, open(os.path.join(folder, "manifest.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+git("add", "posts")
+git("commit", "-q", "-m", f"{day} postları")
+for i in range(3):  # yayıncı aynı anda durum yazmışsa yeniden dene
+    try:
+        git("push", "-q", "origin", "HEAD:main"); break
+    except SystemExit as e:
+        if i == 2 or "403" in str(e) or "denied" in str(e):
+            raise
+        git("pull", "-q", "--rebase", "origin", "main")
+print("yüklendi:", f"posts/{day}", [m["file"] for m in manifest])
