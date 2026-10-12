@@ -1,0 +1,20 @@
+name: Bağlantı kontrolü
+# Elle çalıştırılır: anahtarın gördüğü Facebook sayfalarını ve bağlı Instagram hesap ID'sini listeler.
+on:
+  workflow_dispatch: {}
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sayfalar ve Instagram ID
+        env:
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+        run: |
+          echo "== Anahtarın eriştiği sayfalar ve bağlı Instagram hesapları =="
+          curl -s "https://graph.facebook.com/v21.0/me/accounts?fields=name,instagram_business_account{id,username}&access_token=$IG_TOKEN" | python3 -m json.tool
+          if [ -n "$IG_USER_ID" ]; then
+            echo "== IG_USER_ID kontrolü ve günlük yayın kotası =="
+            curl -s "https://graph.facebook.com/v21.0/$IG_USER_ID?fields=username&access_token=$IG_TOKEN" | python3 -m json.tool
+            curl -s "https://graph.facebook.com/v21.0/$IG_USER_ID/content_publishing_limit?access_token=$IG_TOKEN" | python3 -m json.tool
+          fi
