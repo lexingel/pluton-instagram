@@ -2,6 +2,7 @@ name: Instagram yayın
 on:
   schedule:
     - cron: "*/10 * * * *"   # her 10 dakikada bir kontrol (GitHub birkaç dakika gecikebilir)
+    - cron: "4,19,34,49 * * * *"   # yedek zamanlama: GitHub cron'u atlarsa şansı artırır
   workflow_dispatch: {}
 permissions:
   contents: write
@@ -13,6 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main   # sıraya girmiş çalışma güncel durumu görsün (çift yayını önler)
       - name: Saati gelen postları yayınla
         env:
           IG_USER_ID: ${{ secrets.IG_USER_ID }}

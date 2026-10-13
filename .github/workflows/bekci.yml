@@ -1,0 +1,40 @@
+name: Yayın bekçisi
+# Yayın işi (publish.yml) zamanlayıcı tarafından atlandıysa, saati geçmiş "pending" post
+# varken yayın işini otomatik tetikler. Ayrı bir iş akışı olduğu için bağımsız zamanlanır.
+on:
+  schedule:
+    - cron: "7,22,37,52 * * * *"
+  workflow_dispatch: {}
+permissions:
+  contents: read
+  actions: write
+concurrency:
+  group: bekci
+  cancel-in-progress: true
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Geciken post var mı?
+        id: check
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import datetime as dt, glob, json
+          now = dt.datetime.now(dt.timezone.utc)
+          late = []
+          for mf in glob.glob("posts/*/manifest.json"):
+              for p in json.load(open(mf, encoding="utf-8")):
+                  if p.get("status") == "pending" and now - dt.datetime.fromisoformat(p["publish_at"]) > dt.timedelta(minutes=12):
+                      late.append(p["file"])
+          print("late=" + ",".join(late))
+          PY
+      - name: Yayın işini tetikle
+        if: steps.check.outputs.late != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "Geciken: ${{ steps.check.outputs.late }}"
+          gh workflow run publish.yml --ref main
