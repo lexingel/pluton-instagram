@@ -3,7 +3,9 @@
     "file": "1-sabah-gunaydin.jpg",
     "caption": "☀️ Günaydın sevgili aileler!\n\nCuma, haftanın son okul sabahı. Tatil görünürken kapı hâlâ acele edebilir. Çocuk, çıkmadan önce duyduğu tek sakin cümleyle günü daha yumuşak taşır. Bu cümle, “yalnız değilsin” demenin kısa yoludur.\n\n🔹 Bugünün önerisi: Gözünün içine bakıp “Bugün bir şey seni zorlarsa akşam birlikte bakarız” deyin. 💛\n\nİyi bir cuma dileriz!\n\n#günaydın #aile #plütonpdrm\n📲 @plutonpdrm | @plutongelisimmerkezi_",
     "publish_at": "2026-10-23T08:00:00+03:00",
-    "status": "pending"
+    "status": "pending",
+    "error": "400 {\"error\":{\"message\":\"Media ID is not available\",\"type\":\"OAuthException\",\"code\":9007,\"error_subcode\":2207027,\"is_transient\":false,\"error_user_title\":\"Yay\\u0131nlanam\\u0131yor\",\"error_user_msg\":\"Medya yay\\u0131nlanmaya haz\\u0131r de\\u011fil. L\\u00fctfen biraz bekle\",\"fbtrace_id\":\"AFrYogqx02yj64k3mWHDwKo\"}}",
+    "attempts": 1
   },
   {
     "file": "2-oglen-gelisim-takibi.jpg",
