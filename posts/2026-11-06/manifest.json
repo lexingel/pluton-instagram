@@ -1,23 +1,20 @@
-{
-  "date": "2026-11-06",
-  "posts": [
-    {
-      "file": "1-sabah-gunaydin.jpg",
-      "caption": "Günaydın ☀️\n\nYavaş başla, yumuşak devam et.\nBugün kendine de yer aç.\n\n#plütonpdrm #günaydın #aile\n@plutonpdrm | @plutongelisimmerkezi_",
-      "publish_at": "2026-11-06T08:00:00+03:00",
-      "status": "pending"
-    },
-    {
-      "file": "2-oglen-zorbalik.jpg",
-      "caption": "Akran zorbalığı her zaman morluk bırakmaz.\nİlişkisel ve siber zorbalık da aynı derecede yıpratıcı olabilir.\n\nBelirtiler: okula gitmek istememe, uyku bozulması, içe kapanma, özgüven düşüşü, arkadaş çevresinde ani değişiklik…\n\nNe yapabilirsiniz?\n1. Davranış değişikliğine dikkat edin.\n2. Suçlamadan dinleyin.\n3. Okulla birlikte hareket edin.\n4. Destek aramaktan çekinmeyin.\n\nÇocuğunuz yalnız değil — siz de değilsiniz.\n\n#plütonpdrm #akranzorbalığı #çocukpsikolojisi #aile\n@plutonpdrm | @plutongelisimmerkezi_",
-      "publish_at": "2026-11-06T12:30:00+03:00",
-      "status": "pending"
-    },
-    {
-      "file": "3-aksam-uyku.jpg",
-      "caption": "Uykusunu alamayan çocuklarda kaygı yükselir.\nDüzenli uyku; odak, öğrenme ve duygusal denge için temeldir.\n\nPratik adımlar:\n1. Her gün aynı yatış saati\n2. Yatmadan 1 saat önce ekran kapansın\n3. Oda serin, karanlık, sakin olsun\n4. Yatmadan önce kısa bir sohbet\n\nİyi bir uyku, çocuğa verebileceğiniz en sakin hediyelerden biri.\n\n#plütonpdrm #uyku #çocukgelişimi #kaygı\n@plutonpdrm | @plutongelisimmerkezi_",
-      "publish_at": "2026-11-06T19:30:00+03:00",
-      "status": "pending"
-    }
-  ]
-}
+[
+  {
+    "file": "1-sabah-gunaydin.jpg",
+    "caption": "Günaydın ☀️\n\nYavaş başla, yumuşak devam et.\nBugün kendine de yer aç.\n\n#plütonpdrm #günaydın #aile\n@plutonpdrm | @plutongelisimmerkezi_",
+    "publish_at": "2026-11-06T15:35:06+03:00",
+    "status": "pending"
+  },
+  {
+    "file": "2-oglen-zorbalik.jpg",
+    "caption": "Akran zorbalığı her zaman morluk bırakmaz.\nİlişkisel ve siber zorbalık da aynı derecede yıpratıcı olabilir.\n\nBelirtiler: okula gitmek istememe, uyku bozulması, içe kapanma, özgüven düşüşü, arkadaş çevresinde ani değişiklik…\n\nNe yapabilirsiniz?\n1. Davranış değişikliğine dikkat edin.\n2. Suçlamadan dinleyin.\n3. Okulla birlikte hareket edin.\n4. Destek aramaktan çekinmeyin.\n\nÇocuğunuz yalnız değil — siz de değilsiniz.\n\n#plütonpdrm #akranzorbalığı #çocukpsikolojisi #aile\n@plutonpdrm | @plutongelisimmerkezi_",
+    "publish_at": "2026-11-06T15:35:06+03:00",
+    "status": "pending"
+  },
+  {
+    "file": "3-aksam-uyku.jpg",
+    "caption": "Uykusunu alamayan çocuklarda kaygı yükselir.\nDüzenli uyku; odak, öğrenme ve duygusal denge için temeldir.\n\nPratik adımlar:\n1. Her gün aynı yatış saati\n2. Yatmadan 1 saat önce ekran kapansın\n3. Oda serin, karanlık, sakin olsun\n4. Yatmadan önce kısa bir sohbet\n\nİyi bir uyku, çocuğa verebileceğiniz en sakin hediyelerden biri.\n\n#plütonpdrm #uyku #çocukgelişimi #kaygı\n@plutonpdrm | @plutongelisimmerkezi_",
+    "publish_at": "2026-11-06T19:30:00+03:00",
+    "status": "pending"
+  }
+]
